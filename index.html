@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Northpost — Coming Soon</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --forest:        #4F1787;
+  --forest-mid:    #3D1268;
+  --forest-light:  #5A1E96;
+  --cream:         #F7F1E8;
+  --cream-dark:    #EDE6D9;
+  --coral:         #E8573A;
+  --coral-light:   #FAEAE5;
+  --coral-dark:    #C43F24;
+  --mint:          #4DBFA0;
+  --mint-light:    #D6F2EB;
+  --mint-dark:     #2E9E82;
+  --white:         #FFFFFF;
+  --black:         #141210;
+  --gray:          #7A756D;
+  --gray-light:    #BEB9B0;
+  --border-light:  rgba(247,241,232,0.1);
+  --border-cream:  rgba(20,18,16,0.1);
+}
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+}
+
+/* ══════════════════════════════
+   LEFT PANEL — dark forest
+══════════════════════════════ */
+.left {
+  background: var(--forest);
+  display: flex;
+  flex-direction: column;
+  padding: 36px 52px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* subtle texture lines */
+.left::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 39px,
+    rgba(255,255,255,.025) 39px,
+    rgba(255,255,255,.025) 40px
+  );
+  pointer-events: none;
+}
+
+.left-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0;
+}
+
+.logo {
+  display: flex; align-items: center; gap: 9px;
+  text-decoration: none;
+  position: relative; z-index: 1;
+}
+
+.logo-mark {
+  width: 32px; height: 32px;
+  background: var(--coral);
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.logo-name {
+  font-size: 15px; font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--white);
+}
+
+.live-pill {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--coral);
+  border: 1px solid rgba(232,87,58,.3);
+  padding: 5px 12px;
+  border-radius: 100px;
+  position: relative; z-index: 1;
+}
+
+.pulse {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--coral);
+  animation: blink 2s ease-in-out infinite;
+}
+
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+/* Big headline */
+.left-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  padding-top: 0;
+  position: relative; z-index: 1;
+}
+
+h1 {
+  font-size: clamp(52px, 5.2vw, 76px);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.96;
+  color: var(--white);
+  margin-bottom: 28px;
+}
+
+h1 .coral { color: var(--coral); }
+h1 .mint  { color: #FFB200;  }
+
+.tagline {
+  font-size: 15px; font-weight: 400;
+  line-height: 1.65;
+  color: rgba(247,241,232,.5);
+  max-width: 340px;
+  margin-bottom: 40px;
+}
+
+/* Target badge */
+.target-row {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+
+.target-chip {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(247,241,232,.12);
+  color: rgba(247,241,232,.55);
+}
+
+.target-chip.hi {
+  background: rgba(77,191,160,.12);
+  border-color: rgba(77,191,160,.25);
+  color: var(--mint);
+}
+
+/* Left footer */
+.left-foot {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(247,241,232,.08);
+  display: flex; gap: 20px;
+  position: relative; z-index: 1;
+}
+
+.left-foot a {
+  font-size: 12px; color: rgba(247,241,232,.3);
+  text-decoration: none; transition: color .2s;
+}
+.left-foot a:hover { color: rgba(247,241,232,.7); }
+
+/* ══════════════════════════════
+   RIGHT PANEL — cream
+══════════════════════════════ */
+.right {
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  padding: 36px 52px 40px;
+  border-left: 1px solid var(--border-cream);
+}
+
+.right-top {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.right-tag {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.right-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 0;
+}
+
+/* Right tagline */
+.right-tagline {
+  font-size: 15px; font-weight: 500;
+  color: var(--gray);
+  letter-spacing: -0.01em;
+  margin-bottom: 32px;
+  font-style: normal;
+  line-height: 1.5;
+}
+
+/* Form section */
+.form-eyebrow {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 10px;
+}
+
+.form-row {
+  display: flex;
+  border: 2px solid var(--black);
+  border-radius: 9px;
+  overflow: hidden;
+  background: var(--white);
+  max-width: 400px;
+  transition: border-color .2s;
+  margin-bottom: 9px;
+}
+
+.form-row:focus-within { border-color: var(--coral); }
+
+.form-input {
+  flex: 1;
+  font-family: inherit;
+  font-size: 14px; font-weight: 400;
+  color: var(--black);
+  background: transparent;
+  border: none; outline: none;
+  padding: 13px 16px;
+}
+
+.form-input::placeholder { color: var(--gray-light); }
+
+.form-btn {
+  font-family: inherit;
+  font-size: 13px; font-weight: 700;
+  color: var(--white);
+  background: var(--coral);
+  border: none;
+  padding: 13px 20px;
+  cursor: pointer;
+  transition: background .2s;
+  white-space: nowrap;
+}
+
+.form-btn:hover { background: var(--coral-dark); }
+
+.form-note { font-size: 12px; color: var(--gray-light); }
+
+.ok {
+  display: none;
+  align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 500;
+  color: var(--mint-dark);
+  background: var(--mint-light);
+  border: 1px solid rgba(46,158,130,.2);
+  padding: 11px 15px;
+  border-radius: 8px;
+  max-width: 400px;
+  margin-bottom: 9px;
+}
+.ok.show { display: flex; }
+
+/* Divider */
+.divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 0 0 24px;
+}
+
+.divider-line { flex: 1; height: 1px; background: var(--border-cream); }
+.divider-text { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--gray-light); }
+
+/* Metric rows */
+.metrics { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border-cream); border-radius: 10px; overflow: hidden; background: var(--white); }
+
+.mitem {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-cream);
+  gap: 16px;
+}
+
+.mitem:last-child { border-bottom: none; }
+
+.mitem-left { flex: 1; }
+
+.mname {
+  font-size: 12px; font-weight: 500;
+  color: var(--black);
+  margin-bottom: 5px;
+}
+
+.mbar {
+  height: 3px;
+  background: var(--cream-dark);
+  border-radius: 2px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.mfill {
+  height: 100%;
+  border-radius: 2px;
+  width: 0;
+  animation: grow .9s ease forwards;
+  animation-delay: .5s;
+}
+
+@keyframes grow { to { width: var(--w); } }
+.mfill.g { background: #0E8A56; }
+.mfill.w { background: #B06000; }
+.mfill.r { background: #C03010; }
+
+.mitem-right { text-align: right; flex-shrink: 0; }
+
+.mval {
+  font-size: 16px; font-weight: 800;
+  letter-spacing: -0.03em;
+  display: block; margin-bottom: 2px;
+}
+
+.mval.g { color: #0E8A56; }
+.mval.w { color: #B06000; }
+.mval.r { color: #C03010; }
+
+.mpill {
+  font-size: 10px; font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.mpill.g { background: #E4F4EC; color: #0E6E44; }
+.mpill.w { background: #FEF0DC; color: #8A4800; }
+.mpill.r { background: #FDEAE5; color: #9E2510; }
+
+/* Action block */
+.action {
+  margin-top: 10px;
+  padding: 16px 18px;
+  background: var(--cream-dark);
+  border-radius: 10px;
+  border-left: 3px solid var(--coral);
+}
+
+.action-eye {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--coral);
+  margin-bottom: 6px;
+}
+
+.action-body {
+  font-size: 13px; font-weight: 400;
+  color: var(--black);
+  line-height: 1.6;
+}
+
+.action-body strong { font-weight: 700; color: var(--black); }
+
+/* Right footer */
+.right-foot {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-cream);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.copy { font-size: 12px; color: var(--gray-light); }
+
+.social-row { display: flex; gap: 16px; }
+
+.social-link {
+  font-size: 12px; font-weight: 500;
+  color: var(--gray);
+  text-decoration: none;
+  transition: color .2s;
+}
+
+.social-link:hover { color: var(--black); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 840px) {
+  body { grid-template-columns: 1fr; }
+  .left { padding: 28px 28px 36px; min-height: 50vh; }
+  .right { padding: 28px 28px 36px; }
+  .right-body { padding-top: 40px; }
+  h1 { font-size: 46px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ LEFT PANEL ═══ -->
+<div class="left">
+  <div class="left-top">
+    <a href="#" class="logo">
+      <div class="logo-mark">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M7 12V2M7 2L3 6M7 2L11 6" stroke="#FFECC0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="logo-name">Northpost</span>
+    </a>
+    <div class="live-pill">
+      <span class="pulse"></span>
+      In development
+    </div>
+  </div>
+
+  <div class="left-body">
+    <h1>
+      Know<br>
+      what to<br>
+      <span class="coral">post.</span><br>
+      Know <span class="mint">why</span><br>
+      it works.
+    </h1>
+
+    <p class="tagline">
+      Instagram analytics for creators who are serious about growing — without the noise, the dashboards, or the guesswork.
+    </p>
+
+    <div class="target-row">
+      <span class="target-chip hi">1k–15k followers</span>
+      <span class="target-chip">Creators</span>
+      <span class="target-chip">Small businesses</span>
+    </div>
+  </div>
+
+  <div class="left-foot">
+    <a href="/cdn-cgi/l/email-protection#c6a8a9b4b2aeb6a9b5b2a7b6b686a1aba7afaae8a5a9ab">Contact</a>
+    <a href="#">Privacy</a>
+    <a href="https://instagram.com/northpostapp">@northpostapp</a>
+  </div>
+</div>
+
+<!-- ═══ RIGHT PANEL ═══ -->
+<div class="right">
+  <div class="right-top">
+  </div>
+
+  <div class="right-body">
+
+    <p class="right-tagline">Post with direction. No noise. No fluff. Just clarity.</p>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span class="divider-text">What you'll see</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="metrics">
+      <div class="mitem" style="background:var(--cream-dark);">
+        <span style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--gray);">Sample · @username reel</span>
+      </div>
+
+      <div class="mitem">
+        <div class="mitem-left">
+          <p class="mname">Share rate</p>
+          <div class="mbar"><div class="mfill g" style="--w:85%"></div></div>
+        </div>
+        <div class="mitem-right">
+          <span class="mval g">0.54%</span>
+          <span class="mpill g">5× average</span>
+        </div>
+      </div>
+
+      <div class="mitem">
+        <div class="mitem-left">
+          <p class="mname">Rewatch rate</p>
+          <div class="mbar"><div class="mfill g" style="--w:70%"></div></div>
+        </div>
+        <div class="mitem-right">
+          <span class="mval g">1.47×</span>
+          <span class="mpill g">Strong</span>
+        </div>
+      </div>
+
+      <div class="mitem">
+        <div class="mitem-left">
+          <p class="mname">Save rate</p>
+          <div class="mbar"><div class="mfill w" style="--w:30%"></div></div>
+        </div>
+        <div class="mitem-right">
+          <span class="mval w">0.22%</span>
+          <span class="mpill w">Below avg</span>
+        </div>
+      </div>
+
+      <div class="mitem">
+        <div class="mitem-left">
+          <p class="mname">Comment rate</p>
+          <div class="mbar"><div class="mfill r" style="--w:8%"></div></div>
+        </div>
+        <div class="mitem-right">
+          <span class="mval r">0.009%</span>
+          <span class="mpill r">Needs work</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="action">
+      <p class="action-eye">This week's action</p>
+      <p class="action-body">
+        Your share rate is <strong>exceptional — 5× industry average.</strong> But 13 comments on 14k likes means no conversation. End your next reel with a question.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="right-foot">
+    <span class="copy">© 2025 Northpost</span>
+    <div class="social-row">
+      <a href="https://instagram.com/northpostapp" class="social-link" target="_blank">@northpostapp</a>
+      <a href="mailto:northpostapp@gmail.com" class="social-link">northpostapp@gmail.com</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
