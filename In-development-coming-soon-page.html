@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Northpost — C3 Fuchsia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --paper:    #FAF8F5;
+  --paper2:   #F2EEE7;
+  --paper3:   #E9E3DA;
+  --ink:      #130F0A;
+  --ink-mid:  #38301F;
+  --ink-soft: #2e2d2d;
+  --ink-faint:#B8B0A0;
+  --hot:      #7C2BE8;
+  --hot-lt:   #FDEAF3;
+  --hot-dk:   #B80050;
+  --hot-glow: rgba(229,19,106,0.08);
+  --violet:   #7B2FBE;
+  --violet-lt:#F0E8FA;
+  --green:    #1A7A52;
+  --green-lt: #E4F2EC;
+  --amber:    #D4881A;
+  --amber-lt: #FBF2DE;
+  --border:   rgba(19,15,10,0.09);
+  --border-md:rgba(19,15,10,0.14);
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); overflow-x: hidden; }
+
+nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 60px; height: 60px;
+  background: var(--paper); border-bottom: 2px solid var(--ink);
+}
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.logo-mark { width: 30px; height: 30px; background: var(--hot); border-radius: 7px; display: flex; align-items: center; justify-content: center; }
+.logo-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+.nav-badge { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--hot); display: flex; align-items: center; gap: 7px; }
+.nbdot { width: 6px; height: 6px; border-radius: 50%; background: var(--hot); animation: blink 2.2s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.15} }
+
+.hero {
+  display: grid; grid-template-columns: 60% 40%;
+  min-height: calc(100vh - 60px);
+  border-bottom: 2px solid var(--ink);
+}
+.hero-left {
+  padding: 80px 60px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  border-right: 1px solid var(--border-md);
+}
+.kicker { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--hot); margin-bottom: 28px; display: flex; align-items: center; gap: 10px; }
+.kicker-line { width: 24px; height: 2px; background: var(--hot); }
+h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(58px, 6.5vw, 100px); font-weight: 700; letter-spacing: -0.02em; line-height: 0.96; color: var(--ink); margin-bottom: 32px; }
+h1 .accent { color: var(--hot); }
+h1 .italic { font-style: italic; font-weight: 400; color: var(--violet); }
+.hero-desc { font-size: 16px; font-weight: 300; line-height: 1.75; color: var(--ink-soft); max-width: 420px; }
+.audience { display: flex; gap: 8px; flex-wrap: wrap; }
+.ac { font-size: 12px; font-weight: 500; padding: 7px 15px; border-radius: 100px; border: 1px solid var(--border-md); color: var(--ink-soft); }
+.ac.hi { background: var(--hot-lt); border-color: rgba(229,19,106,0.2); color: var(--hot); font-weight: 600; }
+
+.hero-right {
+  background: var(--paper2);
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 60px 48px; gap: 32px;
+}
+.hr-stat-mini {}
+.hrm-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 8px; }
+.hrm-val { font-family: 'Cormorant Garamond', serif; font-size: 76px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; color: var(--hot); }
+.hrm-unit { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 400; font-style: italic; color: var(--ink-soft); display: block; margin-top: 4px; }
+.hr-divider { height: 1px; background: var(--border-md); }
+
+.section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 60px; background: var(--paper3);
+  border-bottom: 1px solid var(--border-md); border-top: 2px solid var(--ink);
+}
+.sh-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); display: flex; align-items: center; gap: 10px; }
+.sh-label::before { content:''; width:16px; height:1px; background:var(--ink-soft); display:block; }
+.sh-handle { font-size: 12px; color: var(--ink-soft); }
+.sh-tag { font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 4px; background: var(--hot-lt); color: var(--hot); border: 1px solid rgba(229,19,106,0.15); letter-spacing: 0.04em; }
+
+.stats-section { border-bottom: 1px solid var(--border-md); }
+.stat-band { display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid var(--border-md); }
+.sb-item { padding: 36px 40px; border-right: 1px solid var(--border-md); }
+.sb-item:last-child { border-right: none; }
+.sb-name { font-size: 11px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 14px; }
+.sb-track { height: 2px; background: var(--paper3); border-radius: 2px; overflow: hidden; margin-bottom: 16px; }
+.sb-fill { height: 100%; border-radius: 2px; width: 0; animation: grow 1s ease forwards .5s; }
+@keyframes grow { to { width: var(--w); } }
+.sb-val { font-family: 'Cormorant Garamond', serif; font-size: 56px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; display: block; margin-bottom: 10px; }
+.sb-badge { font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.04em; display: inline-block; }
+
+.vg .sb-fill { background: var(--green); }
+.vg .sb-val { color: var(--green); }
+.vg .sb-badge { background: var(--green-lt); color: var(--green); }
+.va .sb-fill { background: var(--amber); }
+.va .sb-val { color: var(--amber); }
+.va .sb-badge { background: var(--amber-lt); color: var(--amber); }
+.vr .sb-fill { background: var(--hot); }
+.vr .sb-val { color: var(--hot); }
+.vr .sb-badge { background: var(--hot-lt); color: var(--hot-dk); }
+
+.pull-quote-band { display: grid; grid-template-columns: 1fr 1fr; border-top: 2px solid var(--ink); }
+.pq-left { background: var(--hot); padding: 52px 60px; display: flex; flex-direction: column; justify-content: center; }
+.pq-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(253,234,243,0.5); margin-bottom: 16px; }
+.pq-quote { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 400; font-style: italic; line-height: 1.35; color: var(--paper); }
+.pq-quote strong { font-weight: 700; font-style: normal; }
+.pq-right { background: var(--paper2); padding: 52px 60px; display: flex; flex-direction: column; justify-content: center; }
+.pq-body { font-size: 16px; font-weight: 300; line-height: 1.8; color: var(--ink-mid); }
+.pq-body strong { font-weight: 600; color: var(--ink); }
+
+.pq-form { margin-top: 28px; border-top: 1px solid var(--border-md); padding-top: 24px; }
+.pq-form-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 12px; }
+footer { display: flex; align-items: center; justify-content: space-between; padding: 22px 60px; border-top: 1px solid var(--border); }
+.fc { font-size: 12px; color: var(--ink-faint); }
+.fl { display: flex; gap: 24px; }
+.fl a { font-size: 12px; color: var(--ink-soft); text-decoration: none; transition: color .2s; }
+.fl a:hover { color: var(--hot); }
+
+@media (max-width: 960px) {
+  nav { padding: 0 24px; }
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { padding: 52px 24px; border-right: none; border-bottom: 1px solid var(--border-md); }
+  .hero-right { padding: 40px 24px; flex-direction: row; flex-wrap: wrap; gap: 20px; }
+  .hr-divider { display: none; }
+  .section-header { padding: 16px 24px; }
+  .stat-band { grid-template-columns: 1fr 1fr; }
+  .sb-item:nth-child(2) { border-right: none; }
+  .sb-item:nth-child(3) { border-top: 1px solid var(--border-md); }
+  .sb-item:nth-child(4) { border-top: 1px solid var(--border-md); border-right: none; }
+  .sb-item { padding: 24px 20px; }
+  .sb-val { font-size: 42px; }
+  .pull-quote-band { grid-template-columns: 1fr; }
+  .pq-left { padding: 40px 24px; }
+  .pq-right { padding: 40px 24px; }
+  footer { padding: 20px 24px; flex-direction: column; gap: 12px; text-align: center; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-mark"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 12V2M7 2L3 6M7 2L11 6" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <span class="logo-name">Northpost</span>
+  </a>
+  <div class="nav-badge"><span class="nbdot"></span>In development</div>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div>
+      <div class="kicker"><span class="kicker-line"></span>Creator Intelligence</div>
+      <h1>Know what<br>to <span class="accent">post.</span><br>Know <span class="italic">why</span><br>it works.</h1>
+      <p class="hero-desc">Post with direction. No noise. No fluff. Just clarity — for creators serious about growing.</p>
+    </div>
+    <div class="audience">
+      <span class="ac hi">1k–15k followers</span>
+      <span class="ac">Creators</span>
+      <span class="ac">Small businesses</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hr-stat-mini">
+      <p class="hrm-label">Top share rate in preview</p>
+      <span class="hrm-val">0.54%</span>
+      <span class="hrm-unit">5× industry average</span>
+    </div>
+    <div class="hr-divider"></div>
+    <div class="hr-stat-mini">
+      <p class="hrm-label">Rewatch rate</p>
+      <span class="hrm-val">1.47×</span>
+      <span class="hrm-unit">Above benchmark</span>
+    </div>
+    <div class="hr-divider"></div>
+    <div class="hr-tally">
+      <p class="hrm-label" style="margin-bottom:12px;">Join the waitlist</p>
+      <iframe data-tally-src="https://tally.so/embed/xXZ2dv?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="282" frameborder="0" marginheight="0" marginwidth="0" title="Northpost waitlist"></iframe>
+      <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+    </div>
+  </div>
+</section>
+
+<div class="section-header">
+  <span class="sh-label">What you'll see</span>
+  <div style="display:flex;gap:12px;align-items:center;">
+    <span class="sh-handle">@your_username · Reel</span>
+    <span class="sh-tag">Sample preview</span>
+  </div>
+</div>
+
+<section class="stats-section">
+  <div class="stat-band">
+    <div class="sb-item vg"><p class="sb-name">Share rate</p><div class="sb-track"><div class="sb-fill" style="--w:85%"></div></div><span class="sb-val">0.54%</span><span class="sb-badge">5× average</span></div>
+    <div class="sb-item vg"><p class="sb-name">Rewatch rate</p><div class="sb-track"><div class="sb-fill" style="--w:70%"></div></div><span class="sb-val">1.47×</span><span class="sb-badge">Strong</span></div>
+    <div class="sb-item va"><p class="sb-name">Save rate</p><div class="sb-track"><div class="sb-fill" style="--w:30%"></div></div><span class="sb-val">0.22%</span><span class="sb-badge">Below avg</span></div>
+    <div class="sb-item vr"><p class="sb-name">Comment rate</p><div class="sb-track"><div class="sb-fill" style="--w:8%"></div></div><span class="sb-val">0.009%</span><span class="sb-badge">Needs work</span></div>
+  </div>
+</section>
+
+<section class="pull-quote-band">
+  <div class="pq-left">
+    <p class="pq-label">This week's action</p>
+    <p class="pq-quote"><strong>Your share rate is exceptional.</strong> But your comments tell a different story.</p>
+  </div>
+  <div class="pq-right">
+    <p class="pq-body">Your share rate is <strong>5× industry average</strong> — that's genuinely rare. But 13 comments on 14k likes means no conversation is happening. End your next reel with a direct question to your audience.</p>
+  </div>
+</section>
+
+<footer>
+  <span class="fc">© 2026 Northpost</span>
+  <div class="fl">
+    <a href="https://instagram.com/northpostapp" target="_blank">@northpostapp</a>
+    <a href="mailto:northpostapp@gmail.com">northpostapp@gmail.com</a>
+    <a href="#">Privacy</a>
+  </div>
+</footer>
+</body>
+</html>
