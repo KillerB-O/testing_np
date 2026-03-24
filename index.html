@@ -54,6 +54,9 @@ nav {
 
 .logo-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
 .nav-badge { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--hot); display: flex; align-items: center; gap: 7px; }
+.nav-right { display: flex; align-items: center; gap: 20px; }
+.nav-signin { font-size: 13px; font-weight: 500; color: var(--ink); text-decoration: none; padding: 8px 18px; border: 1px solid var(--border-md); border-radius: 6px; transition: all 0.2s ease; }
+.nav-signin:hover { background: var(--hot); color: white; border-color: var(--hot); }
 .nbdot { width: 6px; height: 6px; border-radius: 50%; background: var(--hot); animation: blink 2.2s ease-in-out infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.15} }
 
@@ -171,7 +174,10 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
     <div class="logo-mark"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 12V2M7 2L3 6M7 2L11 6" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     <span class="logo-name">Northpost</span>
   </a>
-  <div class="nav-badge"><span class="nbdot"></span>In development</div>
+  <div class="nav-right">
+    <div class="nav-badge"><span class="nbdot"></span>In development</div>
+    <a href="https://app.northpost.io/login" class="nav-signin">Sign In</a>
+  </div>
 </nav>
 
 <section class="hero">
